@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  app:
+    build: ./todo-app
+    command: gunicorn -w 1 -b 0.0.0.0:5000 wsgi:app
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_PASSWORD: viveksray7
+    volumes:
+      - todoapp:/var/lib/postgresql/data
+
+  nginx:
+    build: ./nginx
+    ports:
+      - 4000:4000
+    depends_on:
+      - app
+
+volumes:
+  todoapp:

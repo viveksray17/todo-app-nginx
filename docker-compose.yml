@@ -3,7 +3,7 @@ version: "3.8"
 services:
   app:
     build: ./todo-app
-    command: gunicorn -w 1 -b 0.0.0.0:5000 wsgi:app
+    command: gunicorn app:app
     depends_on:
       - postgres
 
